@@ -1,8 +1,10 @@
 ﻿using Prism.Mvvm;
+using System.ComponentModel.Composition;
 
 namespace AudioVisualizer
 {
-  public class ShellViewmodel : BindableBase
+  [Export]
+  public class ShellViewModel : BindableBase
   {
   }
 }

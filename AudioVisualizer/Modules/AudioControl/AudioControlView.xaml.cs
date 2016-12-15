@@ -13,6 +13,16 @@ namespace AudioVisualizer.Modules.AudioControl
     public AudioControlView()
     {
       InitializeComponent();
-    }    
+    }
+
+    [Import]
+    private AudioControlViewModel ViewModel
+    {
+      set
+      {
+        DataContext = value;
+      }
+    }
+
   }
 }

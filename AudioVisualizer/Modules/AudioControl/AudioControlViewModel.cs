@@ -1,9 +1,12 @@
 ﻿using AudioVisualizer.Utils.RealTimeAudioListener;
 using NAudio.CoreAudioApi;
 using Prism.Mvvm;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
+using System.Linq;
 using System.Windows.Media;
+using System.Windows.Threading;
 
 namespace AudioVisualizer.Modules.AudioControl
 {
@@ -13,10 +16,19 @@ namespace AudioVisualizer.Modules.AudioControl
     private readonly IRealTimeAudioListener _audioListener;
 
     private bool _isListening;
-    
+    private DispatcherTimer _timer;
+
+    [ImportingConstructor]
     public AudioControlViewModel(IRealTimeAudioListener realTimeAudioListener)
     {
       _audioListener = realTimeAudioListener;
+
+      SelectedDevice = _audioListener.CaptureDevices.FirstOrDefault();
+
+      _timer = new DispatcherTimer();
+      _timer.Interval = TimeSpan.FromMilliseconds(1);
+      _timer.Tick += OnGetVolumeLevel;
+      _timer.IsEnabled = true;
     }
 
     #region Properties
@@ -69,5 +81,17 @@ namespace AudioVisualizer.Modules.AudioControl
     }
 
     #endregion Properties
+
+    #region Private Function & Events
+
+    private void OnGetVolumeLevel(object sender, EventArgs e)
+    {
+      if (SelectedDevice != null)
+        Level = SelectedDevice.AudioMeterInformation.MasterPeakValue;
+
+    }
+
+    #endregion
+
   }
 }

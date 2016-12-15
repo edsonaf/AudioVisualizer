@@ -86,7 +86,7 @@
       <DependentUpon>AudioControlView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Modules\AudioControl\AudioControlViewModel.cs" />
-    <Compile Include="ShellViewmodel.cs" />
+    <Compile Include="ShellViewModel.cs" />
     <Compile Include="Utils\RealTimeAudioListener\IRealTimeAudioListener.cs" />
     <Compile Include="Utils\RealTimeAudioListener\RealTimeAudioListener.cs" />
     <Compile Include="Utils\SystemColorRetriever\SystemColorRetriever.cs" />

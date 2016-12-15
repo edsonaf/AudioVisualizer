@@ -14,7 +14,8 @@ namespace AudioVisualizer
       InitializeComponent();
     }
 
-    private ShellViewmodel ViewModel
+    [Import]
+    private ShellViewModel ViewModel
     {
       set
       {
