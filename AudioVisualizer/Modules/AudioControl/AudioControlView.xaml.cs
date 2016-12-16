@@ -1,6 +1,4 @@
-﻿using AudioVisualizer.Infrastructure;
-using System.ComponentModel.Composition;
-using System.Windows.Controls;
+﻿using System.ComponentModel.Composition;
 
 namespace AudioVisualizer.Modules.AudioControl
 {
@@ -8,7 +6,7 @@ namespace AudioVisualizer.Modules.AudioControl
   /// Interaction logic for AudioControlView.xaml
   /// </summary>
   [Export]
-  public partial class AudioControlView : UserControl
+  public partial class AudioControlView
   {
     public AudioControlView()
     {
@@ -18,11 +16,7 @@ namespace AudioVisualizer.Modules.AudioControl
     [Import]
     private AudioControlViewModel ViewModel
     {
-      set
-      {
-        DataContext = value;
-      }
+      set { DataContext = value; }
     }
-
   }
 }

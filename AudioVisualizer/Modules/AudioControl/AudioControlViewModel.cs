@@ -1,10 +1,14 @@
 ﻿using AudioVisualizer.Utils.RealTimeAudioListener;
+using AudioVisualizer.Utils.SystemColorRetriever;
 using NAudio.CoreAudioApi;
+using Prism.Commands;
+using Prism.Events;
 using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Linq;
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Threading;
 
@@ -13,30 +17,28 @@ namespace AudioVisualizer.Modules.AudioControl
   [Export(typeof(AudioControlViewModel))]
   public class AudioControlViewModel : BindableBase
   {
+    private readonly IEventAggregator _eventAggregator;
     private readonly IRealTimeAudioListener _audioListener;
 
     private bool _isListening;
-    private DispatcherTimer _timer;
+    private readonly DispatcherTimer _timer;
 
     [ImportingConstructor]
-    public AudioControlViewModel(IRealTimeAudioListener realTimeAudioListener)
+    public AudioControlViewModel(IEventAggregator aggregator, IRealTimeAudioListener realTimeAudioListener)
     {
+      _eventAggregator = aggregator;
       _audioListener = realTimeAudioListener;
 
       SelectedDevice = _audioListener.CaptureDevices.FirstOrDefault();
 
-      _timer = new DispatcherTimer();
-      _timer.Interval = TimeSpan.FromMilliseconds(1);
+      _timer = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(10) };
       _timer.Tick += OnGetVolumeLevel;
       _timer.IsEnabled = true;
     }
 
     #region Properties
 
-    public List<MMDevice> CaptureDevices
-    {
-      get { return _audioListener.CaptureDevices; }
-    }
+    public List<MMDevice> CaptureDevices => _audioListener.CaptureDevices;
 
     public MMDevice SelectedDevice
     {
@@ -72,15 +74,24 @@ namespace AudioVisualizer.Modules.AudioControl
       set { SetProperty(ref _comboBoxEnabled, value); }
     }
 
-    private Brush _themeColor;
-
     public Brush ThemeColorBrush
     {
-      get { return _themeColor; }
-      set { SetProperty(ref _themeColor, value); }
+      get
+      {
+        Color color = SystemColorRetriever.GetSystemColor();
+        return new SolidColorBrush(Color.FromArgb(255, color.R, color.G, color.B));
+      }
     }
 
     #endregion Properties
+
+    #region Commands
+
+    private DelegateCommand _startCommand;
+
+    public ICommand StartCommand => _startCommand ?? (_startCommand = new DelegateCommand(Start, () => SelectedDevice != null));
+
+    #endregion Commands
 
     #region Private Function & Events
 
@@ -88,10 +99,35 @@ namespace AudioVisualizer.Modules.AudioControl
     {
       if (SelectedDevice != null)
         Level = SelectedDevice.AudioMeterInformation.MasterPeakValue;
-
     }
 
-    #endregion
+    private void Start()
+    {
+      if (!_isListening)
+      {
+        //TODO: Start the Visualization Control in the VisualizationRegion
+        OnOffButtonText = "Stop";
+        ComboboxEnabled = false;
 
+        _eventAggregator.GetEvent<StartVisualizerEvent>().Publish(true);
+      }
+      else
+      {
+        OnOffButtonText = "Start";
+        ComboboxEnabled = true;
+
+        _eventAggregator.GetEvent<StartVisualizerEvent>().Publish(false);
+      }
+
+      _isListening = !_isListening;
+    }
+
+    #endregion Private Function & Events
+
+    ~AudioControlViewModel()
+    {
+      _timer.Stop();
+      _timer.Tick -= OnGetVolumeLevel;
+    }
   }
 }

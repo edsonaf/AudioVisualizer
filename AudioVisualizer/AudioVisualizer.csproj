@@ -80,17 +80,36 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Controls\IVisualizerBarControl.cs" />
+    <Compile Include="Controls\VisualizerBarControl.xaml.cs">
+      <DependentUpon>VisualizerBarControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Infrastructure\RegionNames.cs" />
     <Compile Include="Modules\AudioControl\AudioControlModule.cs" />
     <Compile Include="Modules\AudioControl\AudioControlView.xaml.cs">
       <DependentUpon>AudioControlView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Modules\AudioControl\AudioControlViewModel.cs" />
+    <Compile Include="Modules\AudioControl\StartVisualizerEvent.cs" />
+    <Compile Include="Modules\Visualizer\SpectrumVisualizer\SpectrumVisualizerView.xaml.cs">
+      <DependentUpon>SpectrumVisualizerView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\Visualizer\SpectrumVisualizer\SpectrumVisualizerViewModel.cs" />
+    <Compile Include="Modules\Visualizer\VisualizerModule.cs" />
     <Compile Include="ShellViewModel.cs" />
     <Compile Include="Utils\RealTimeAudioListener\IRealTimeAudioListener.cs" />
     <Compile Include="Utils\RealTimeAudioListener\RealTimeAudioListener.cs" />
+    <Compile Include="Utils\RealTimeAudioListener\SpectrumDataEventArgs.cs" />
     <Compile Include="Utils\SystemColorRetriever\SystemColorRetriever.cs" />
+    <Page Include="Controls\VisualizerBarControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Modules\AudioControl\AudioControlView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Modules\Visualizer\SpectrumVisualizer\SpectrumVisualizerView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

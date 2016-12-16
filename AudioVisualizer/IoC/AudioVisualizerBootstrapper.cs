@@ -1,4 +1,5 @@
 ﻿using AudioVisualizer.Modules.AudioControl;
+using AudioVisualizer.Modules.Visualizer;
 using Prism.Mef;
 using Prism.Modularity;
 using System.ComponentModel.Composition.Hosting;
@@ -37,6 +38,13 @@ namespace AudioVisualizer.IoC
         {
           ModuleName = typeof(AudioControlModule).Name,
           ModuleType = typeof(AudioControlModule).AssemblyQualifiedName
+        });
+
+      ModuleCatalog.AddModule(
+        new ModuleInfo()
+        {
+          ModuleName = typeof(VisualizerModule).Name,
+          ModuleType = typeof(VisualizerModule).AssemblyQualifiedName
         });
     }
   }

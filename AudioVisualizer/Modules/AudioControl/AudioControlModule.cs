@@ -11,13 +11,11 @@ namespace AudioVisualizer.Modules.AudioControl
   public class AudioControlModule : IModule
   {
     private readonly IRegionManager _regionManager;
-    private readonly IRealTimeAudioListener _realTimeAudioListener;
 
     [ImportingConstructor]
     public AudioControlModule(IRegionManager regionManager, IRealTimeAudioListener audioListener)
     {
       _regionManager = regionManager;
-      _realTimeAudioListener = audioListener;
     }
 
     public void Initialize()
