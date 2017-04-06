@@ -10,7 +10,7 @@ using System.ComponentModel.Composition;
 using System.Linq;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Threading;
+using System.Timers;
 
 namespace AudioVisualizer.Modules.AudioControl
 {
@@ -21,7 +21,7 @@ namespace AudioVisualizer.Modules.AudioControl
     private readonly IRealTimeAudioListener _audioListener;
 
     private bool _isListening;
-    private readonly DispatcherTimer _timer;
+    private readonly Timer _timer;
 
     [ImportingConstructor]
     public AudioControlViewModel(IEventAggregator aggregator, IRealTimeAudioListener realTimeAudioListener)
@@ -31,9 +31,9 @@ namespace AudioVisualizer.Modules.AudioControl
 
       SelectedDevice = _audioListener.CaptureDevices.FirstOrDefault();
 
-      _timer = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(10) };
-      _timer.Tick += OnGetVolumeLevel;
-      _timer.IsEnabled = true;
+      _timer = new Timer(5);
+      _timer.Elapsed += OnGetVolumeLevel;
+      _timer.Start();
     }
 
     #region Properties
@@ -50,12 +50,10 @@ namespace AudioVisualizer.Modules.AudioControl
       }
     }
 
-    private float _level;
-
+    
     public float Level
     {
-      get { return _level; }
-      set { SetProperty(ref _level, value); }
+      get { return SelectedDevice?.AudioMeterInformation.MasterPeakValue ?? 0; }
     }
 
     private string _onOffButtonText = "Start";
@@ -97,8 +95,7 @@ namespace AudioVisualizer.Modules.AudioControl
 
     private void OnGetVolumeLevel(object sender, EventArgs e)
     {
-      if (SelectedDevice != null)
-        Level = SelectedDevice.AudioMeterInformation.MasterPeakValue;
+      if (SelectedDevice != null) OnPropertyChanged(() => Level);
     }
 
     private void Start()
@@ -115,7 +112,6 @@ namespace AudioVisualizer.Modules.AudioControl
       {
         OnOffButtonText = "Start";
         ComboboxEnabled = true;
-
         _eventAggregator.GetEvent<StartVisualizerEvent>().Publish(false);
       }
 
@@ -127,7 +123,6 @@ namespace AudioVisualizer.Modules.AudioControl
     ~AudioControlViewModel()
     {
       _timer.Stop();
-      _timer.Tick -= OnGetVolumeLevel;
     }
   }
 }

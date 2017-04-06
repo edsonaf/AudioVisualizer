@@ -42,7 +42,7 @@ namespace AudioVisualizer.Utils.RealTimeAudioListener
 
     public void Stop()
     {
-      _capture.StopRecording();
+      _capture?.StopRecording();
     }
 
     #region Data Processing
@@ -104,12 +104,6 @@ namespace AudioVisualizer.Utils.RealTimeAudioListener
           if (y < 0) y = 0;
           _spectrumData.Add((byte)y);
         }
-
-        //if (true)
-        //{
-        //  _spectrum.SpectrumData = _spectrumData;
-        //  _spectrum.Set();
-        //}
 
         SpectrumDataReceived?.Invoke(this, new SpectrumDataEventArgs(_spectrumData));
 

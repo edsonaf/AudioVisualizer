@@ -43,6 +43,9 @@
       <HintPath>..\packages\NAudio.1.7.3\lib\net35\NAudio.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.8.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="Prism, Version=6.2.0.0, Culture=neutral, PublicKeyToken=91a96d2a154366d8, processorArchitecture=MSIL">
       <HintPath>..\packages\Prism.Core.6.2.0\lib\net45\Prism.dll</HintPath>
       <Private>True</Private>
@@ -91,6 +94,8 @@
     </Compile>
     <Compile Include="Modules\AudioControl\AudioControlViewModel.cs" />
     <Compile Include="Modules\AudioControl\StartVisualizerEvent.cs" />
+    <Compile Include="Modules\GameSenseControl\GameSenseModule.cs" />
+    <Compile Include="Modules\GameSenseControl\IGameSenseModule.cs" />
     <Compile Include="Modules\Visualizer\SpectrumVisualizer\SpectrumVisualizerView.xaml.cs">
       <DependentUpon>SpectrumVisualizerView.xaml</DependentUpon>
     </Compile>

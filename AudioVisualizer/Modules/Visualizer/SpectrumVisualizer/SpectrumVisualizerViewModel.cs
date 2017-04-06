@@ -1,5 +1,6 @@
 ﻿using AudioVisualizer.Controls;
 using AudioVisualizer.Modules.AudioControl;
+using AudioVisualizer.Modules.GameSenseControl;
 using AudioVisualizer.Utils.RealTimeAudioListener;
 using AudioVisualizer.Utils.SystemColorRetriever;
 using Prism.Events;
@@ -15,12 +16,14 @@ namespace AudioVisualizer.Modules.Visualizer.SpectrumVisualizer
   {
     private readonly IEventAggregator _eventAggregator;
     private readonly IRealTimeAudioListener _realTimeAudioListener;
+    private readonly IGameSenseModule _gameSenseModule;
 
     [ImportingConstructor]
-    public SpectrumVisualizerViewModel(IEventAggregator aggregator, IRealTimeAudioListener audioListener)
+    public SpectrumVisualizerViewModel(IEventAggregator aggregator, IRealTimeAudioListener audioListener, IGameSenseModule gameSenseModule)
     {
       if (aggregator == null) throw new ArgumentNullException();
-      if (audioListener == null) throw new ArgumentException();
+      if (audioListener == null) throw new ArgumentNullException();
+      if (gameSenseModule == null) throw new ArgumentNullException();
 
       SpectrumBarControl = new VisualizerBarControl();
 
@@ -29,6 +32,9 @@ namespace AudioVisualizer.Modules.Visualizer.SpectrumVisualizer
 
       _realTimeAudioListener = audioListener;
       _realTimeAudioListener.SpectrumDataReceived += OnSpectrumDataReceived;
+
+      _gameSenseModule = gameSenseModule;
+      GameSenseAvailable = _gameSenseModule.InitializeGameSenseConnection();
     }
 
     public Brush ThemeColor
@@ -39,6 +45,10 @@ namespace AudioVisualizer.Modules.Visualizer.SpectrumVisualizer
         return new SolidColorBrush(Color.FromArgb(255, color.R, color.G, color.B));
       }
     }
+
+    public bool GameSenseAvailable { get; private set; }
+
+    public bool SendToGameSenseChecked { get; set; }
 
     public VisualizerBarControl SpectrumBarControl { get; }
 
@@ -52,7 +62,12 @@ namespace AudioVisualizer.Modules.Visualizer.SpectrumVisualizer
 
     private void OnSpectrumDataReceived(object sender, SpectrumDataEventArgs e)
     {
+      // send to spectrum bar control
       SpectrumBarControl.Set(e.SpectrumData);
+
+      // send to Keyboard
+      if (SendToGameSenseChecked)
+        _gameSenseModule.SendInfoToGameSense(e.SpectrumData);
     }
 
     ~SpectrumVisualizerViewModel()
