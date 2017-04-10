@@ -16,37 +16,34 @@ namespace AudioVisualizer.Modules.GameSenseControl
     public bool InitializeGameSenseConnection()
     {
       //Read the 'coreProps.json' inside %ProgramData%
-      using (StreamReader reader = new StreamReader("C:\\ProgramData\\SteelSeries\\SteelSeries Engine 3\\coreProps.json"))
+      using (var reader = new StreamReader(@"C:\ProgramData\SteelSeries\SteelSeries Engine 3\coreProps.json"))
       {
-        string json = reader.ReadToEnd();
-        Item item = JsonConvert.DeserializeObject<Item>(json);
+        var json = reader.ReadToEnd();
+        var item = JsonConvert.DeserializeObject<Item>(json);
         _sseAddress = item.Address;
-      };
+      }
 
-      if (!String.IsNullOrEmpty(_sseAddress))
-        return true;
-
-      return false;
+      return !String.IsNullOrEmpty(_sseAddress);
     }
 
     public async void SendInfoToGameSense(List<byte> data)
     {
-      string test = "{\n\"game\": \"AUDIOVISUALIZER\", \n \"event\": \"AUDIO\",\n\"data\": {\"values\": " + JsonConvert.SerializeObject(data) + "}\n}";
+      string test =
+        $"{{\n\"game\": \"AUDIOVISUALIZER\", \n \"event\": \"AUDIO\",\n\"data\": {{\"values\": {JsonConvert.SerializeObject(data)}}}\n}}";
 
-      HttpWebRequest rq = (HttpWebRequest)WebRequest.Create("http://" + _sseAddress + "/game_event");
+      HttpWebRequest rq = (HttpWebRequest) WebRequest.Create("http://" + _sseAddress + "/game_event");
       rq.Method = "POST";
       rq.ContentType = "application/json";
 
 
       using (var sWriter = new StreamWriter(rq.GetRequestStream()))
       {
-        var dataInArray = data.ToArray();
         sWriter.Write(test);
         sWriter.Flush();
         sWriter.Close();
       }
 
-      var rp = await rq.GetResponseAsync();
+      await rq.GetResponseAsync();
     }
   }
 
