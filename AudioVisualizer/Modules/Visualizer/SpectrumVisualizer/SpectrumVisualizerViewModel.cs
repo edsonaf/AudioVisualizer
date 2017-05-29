@@ -1,18 +1,15 @@
-﻿using AudioVisualizer.Controls;
+﻿using System.Collections.Generic;
+using AudioVisualizer.Controls;
 using AudioVisualizer.Modules.AudioControl;
 using AudioVisualizer.Modules.GameSenseControl;
 using AudioVisualizer.Utils.RealTimeAudioListener;
-using AudioVisualizer.Utils.SystemColorRetriever;
 using Prism.Events;
-using Prism.Mvvm;
-using System;
 using System.ComponentModel.Composition;
-using System.Windows.Media;
 
 namespace AudioVisualizer.Modules.Visualizer.SpectrumVisualizer
 {
   [Export(typeof(SpectrumVisualizerViewModel))]
-  public class SpectrumVisualizerViewModel : BindableBase
+  public class SpectrumVisualizerViewModel : ShellViewModel
   {
     private readonly IEventAggregator _eventAggregator;
     private readonly IRealTimeAudioListener _realTimeAudioListener;
@@ -21,10 +18,6 @@ namespace AudioVisualizer.Modules.Visualizer.SpectrumVisualizer
     [ImportingConstructor]
     public SpectrumVisualizerViewModel(IEventAggregator aggregator, IRealTimeAudioListener audioListener, IGameSenseModule gameSenseModule)
     {
-      if (aggregator == null) throw new ArgumentNullException();
-      if (audioListener == null) throw new ArgumentNullException();
-      if (gameSenseModule == null) throw new ArgumentNullException();
-
       SpectrumBarControl = new VisualizerBarControl();
 
       _eventAggregator = aggregator;
@@ -37,16 +30,7 @@ namespace AudioVisualizer.Modules.Visualizer.SpectrumVisualizer
       GameSenseAvailable = _gameSenseModule.InitializeGameSenseConnection();
     }
 
-    public Brush ThemeColor
-    {
-      get
-      {
-        Color color = SystemColorRetriever.GetSystemColor();
-        return new SolidColorBrush(Color.FromArgb(255, color.R, color.G, color.B));
-      }
-    }
-
-    public bool GameSenseAvailable { get; private set; }
+    public bool GameSenseAvailable { get; }
 
     public bool SendToGameSenseChecked { get; set; }
 
@@ -57,7 +41,10 @@ namespace AudioVisualizer.Modules.Visualizer.SpectrumVisualizer
       if (start)
         _realTimeAudioListener.Start();
       else
+      {
         _realTimeAudioListener.Stop();
+        SpectrumBarControl.Set(new List<byte>(){0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0});
+      }
     }
 
     private void OnSpectrumDataReceived(object sender, SpectrumDataEventArgs e)

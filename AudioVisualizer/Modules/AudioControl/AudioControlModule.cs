@@ -4,6 +4,7 @@ using Prism.Mef.Modularity;
 using Prism.Modularity;
 using Prism.Regions;
 using System.ComponentModel.Composition;
+using AudioVisualizer.Modules.SpotifyIntegration;
 
 namespace AudioVisualizer.Modules.AudioControl
 {
@@ -13,7 +14,7 @@ namespace AudioVisualizer.Modules.AudioControl
     private readonly IRegionManager _regionManager;
 
     [ImportingConstructor]
-    public AudioControlModule(IRegionManager regionManager, IRealTimeAudioListener audioListener)
+    public AudioControlModule(IRegionManager regionManager, IRealTimeAudioListener audioListener, ISpotifyLocal localSpotify)
     {
       _regionManager = regionManager;
     }

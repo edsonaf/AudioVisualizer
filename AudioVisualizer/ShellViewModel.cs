@@ -10,15 +10,23 @@ namespace AudioVisualizer
   {
     public ShellViewModel()
     {
-      ThemeColor = SystemColorRetriever.GetSystemColor();
+      ColorRetriever = new SystemColorRetriever();
+      ColorRetriever.GetSystemColor();
+      ColorRetriever.Start();
     }
 
-    private Color _themeColor;
+    public SystemColorRetriever ColorRetriever { get; }
 
-    public Color ThemeColor
+    private bool _topMost = true;
+    public bool TopMost
     {
-      get { return _themeColor; }
-      set { SetProperty(ref _themeColor, value); }
+      get => _topMost;
+      set => SetProperty(ref _topMost, value);
+    }
+
+    ~ShellViewModel()
+    {
+      ColorRetriever.Stop();
     }
   }
 }

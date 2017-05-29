@@ -58,9 +58,13 @@
       <HintPath>..\packages\Prism.Wpf.6.2.0\lib\net45\Prism.Wpf.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="SpotifyAPI, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\SpotifyAPI-NET.2.13.1\lib\SpotifyAPI.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Management" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Prism.Wpf.6.2.0\lib\net45\System.Windows.Interactivity.dll</HintPath>
       <Private>True</Private>
@@ -96,6 +100,8 @@
     <Compile Include="Modules\AudioControl\StartVisualizerEvent.cs" />
     <Compile Include="Modules\GameSenseControl\GameSenseModule.cs" />
     <Compile Include="Modules\GameSenseControl\IGameSenseModule.cs" />
+    <Compile Include="Modules\SpotifyIntegration\ISpotifyLocal.cs" />
+    <Compile Include="Modules\SpotifyIntegration\SpotifyLocal.cs" />
     <Compile Include="Modules\Visualizer\SpectrumVisualizer\SpectrumVisualizerView.xaml.cs">
       <DependentUpon>SpectrumVisualizerView.xaml</DependentUpon>
     </Compile>
@@ -150,7 +156,9 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -163,7 +171,11 @@
   <ItemGroup>
     <Resource Include="resources\Alecive-Flatwoken-Apps-Volume-Soundsettings.ico" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <AdditionalFiles Include="resources\AudioVisualizer.lsp">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </AdditionalFiles>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -18,12 +18,12 @@ namespace AudioVisualizer.Modules.GameSenseControl
       //Read the 'coreProps.json' inside %ProgramData%
       using (var reader = new StreamReader(@"C:\ProgramData\SteelSeries\SteelSeries Engine 3\coreProps.json"))
       {
-        var json = reader.ReadToEnd();
+        string json = reader.ReadToEnd();
         var item = JsonConvert.DeserializeObject<Item>(json);
         _sseAddress = item.Address;
       }
 
-      return !String.IsNullOrEmpty(_sseAddress);
+      return !string.IsNullOrEmpty(_sseAddress);
     }
 
     public async void SendInfoToGameSense(List<byte> data)
