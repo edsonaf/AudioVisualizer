@@ -52,7 +52,7 @@ namespace AudioVisualizer.Modules.AudioControl
           _audioListener.SelectedDevice = value;
       }
     }
-    
+
     public float Level => SelectedDevice?.AudioMeterInformation.MasterPeakValue ?? 0;
 
     private string _onOffButtonText = "Start";
