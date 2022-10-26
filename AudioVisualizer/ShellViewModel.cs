@@ -1,11 +1,8 @@
 ﻿using AudioVisualizer.Utils.SystemColorRetriever;
 using Prism.Mvvm;
-using System.ComponentModel.Composition;
-using System.Windows.Media;
 
 namespace AudioVisualizer
 {
-  [Export]
   public class ShellViewModel : BindableBase
   {
     public ShellViewModel()

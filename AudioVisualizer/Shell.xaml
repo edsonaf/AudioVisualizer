@@ -13,7 +13,7 @@
         Topmost="{Binding TopMost}"
         mc:Ignorable="d">
 
-  <Window.Icon>resources\Alecive-Flatwoken-Apps-Volume-Soundsettings.ico</Window.Icon>
+  <!-- <Window.Icon>resources\Alecive-Flatwoken-Apps-Volume-Soundsettings.ico</Window.Icon> -->
 
   <Grid>
     <Grid.Background>
@@ -29,10 +29,12 @@
     </Grid.RowDefinitions>
 
     <Border Grid.Row="0">
-      <ContentControl prism:RegionManager.RegionName="{x:Static inf:RegionNames.AudioControlRegion}" />
+      <TextBlock>hello mom</TextBlock>
+      <!-- <ContentControl prism:RegionManager.RegionName="{x:Static inf:RegionNames.AudioControlRegion}" /> -->
     </Border>
     <Border Grid.Row="1" Margin="4,4,4,4">
-      <ContentControl HorizontalAlignment="Center" prism:RegionManager.RegionName="{x:Static inf:RegionNames.VisualizerRegion}" />
+      <TextBlock>hello mom</TextBlock>
+      <!-- <ContentControl HorizontalAlignment="Center" prism:RegionManager.RegionName="{x:Static inf:RegionNames.VisualizerRegion}" /> -->
     </Border>
   </Grid>
 </Window>

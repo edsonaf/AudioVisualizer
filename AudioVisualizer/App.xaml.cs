@@ -23,22 +23,22 @@ namespace AudioVisualizer
 
     private static void RunInDebugMode()
     {
-      AudioVisualizerBootstrapper bootstrapper = new AudioVisualizerBootstrapper();
-      bootstrapper.Run();
+      // AudioVisualizerBootstrapper bootstrapper = new AudioVisualizerBootstrapper();
+      // bootstrapper.Run();
     }
 
     private static void RunInReleaseMode()
     {
-      AppDomain.CurrentDomain.UnhandledException += AppDomainUnhandledException;
-      try
-      {
-        AudioVisualizerBootstrapper bootstrapper = new AudioVisualizerBootstrapper();
-        bootstrapper.Run();
-      }
-      catch (Exception ex)
-      {
-        HandleException(ex);
-      }
+      // AppDomain.CurrentDomain.UnhandledException += AppDomainUnhandledException;
+      // try
+      // {
+      //   AudioVisualizerBootstrapper bootstrapper = new AudioVisualizerBootstrapper();
+      //   bootstrapper.Run();
+      // }
+      // catch (Exception ex)
+      // {
+      //   HandleException(ex);
+      // }
     }
 
     private static void AppDomainUnhandledException(object sender, UnhandledExceptionEventArgs e)

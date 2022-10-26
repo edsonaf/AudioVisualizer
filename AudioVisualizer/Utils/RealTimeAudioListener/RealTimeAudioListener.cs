@@ -3,13 +3,10 @@ using NAudio.Dsp;
 using NAudio.Wave;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.Composition;
 using System.Linq;
 
 namespace AudioVisualizer.Utils.RealTimeAudioListener
 {
-  [PartCreationPolicy(CreationPolicy.Shared)] // Singleton
-  [Export(typeof(IRealTimeAudioListener))]
   public class RealTimeAudioListener : IRealTimeAudioListener
   {
     public event EventHandler<SpectrumDataEventArgs> SpectrumDataReceived;

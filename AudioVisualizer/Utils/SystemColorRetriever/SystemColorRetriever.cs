@@ -1,17 +1,13 @@
 ﻿using System;
-using System.ComponentModel.Composition;
 using System.Diagnostics;
-using System.Management;
 using System.Security.Principal;
 using System.Windows.Media;
 using Prism.Mvvm;
 
 namespace AudioVisualizer.Utils.SystemColorRetriever
-{
-  [PartCreationPolicy(CreationPolicy.Shared)] // Singleton
-  public class SystemColorRetriever : BindableBase
+{  public class SystemColorRetriever : BindableBase
   {
-    private static ManagementEventWatcher _watcher;
+    // private static ManagementEventWatcher _watcher;
     private const string ValueName = "ColorizationColor";
     private const string KeyPath = @"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM";
 
@@ -23,7 +19,7 @@ namespace AudioVisualizer.Utils.SystemColorRetriever
       private set
       {
         SetProperty(ref _systemColor, value);
-        OnPropertyChanged(() => ThemeColor);
+        // OnPropertyChanged(() => ThemeColor);
       } 
     }
 
@@ -61,31 +57,31 @@ namespace AudioVisualizer.Utils.SystemColorRetriever
     public void Start()
     {
       var currentUser = WindowsIdentity.GetCurrent();
-      try
-      {
-        if (currentUser.User == null) return;
-
-        var query = new WqlEventQuery($@"SELECT * FROM RegistryValueChangeEvent WHERE Hive='HKEY_USERS' AND KeyPath='{currentUser.User.Value}\\Software\\Microsoft\\Windows\\DWM\\' AND ValueName='ColorizationColor'");
-        _watcher = new ManagementEventWatcher(query);
-
-        _watcher.EventArrived += OnKeyValueChanged;
-        _watcher.Start();
-      }
-      catch (ManagementException err)
-      {
-        Debug.WriteLine($"Error: {err.Message}");
-      }
+      // try
+      // {
+      //   if (currentUser.User == null) return;
+      //
+      //   var query = new WqlEventQuery($@"SELECT * FROM RegistryValueChangeEvent WHERE Hive='HKEY_USERS' AND KeyPath='{currentUser.User.Value}\\Software\\Microsoft\\Windows\\DWM\\' AND ValueName='ColorizationColor'");
+      //   _watcher = new ManagementEventWatcher(query);
+      //
+      //   _watcher.EventArrived += OnKeyValueChanged;
+      //   _watcher.Start();
+      // }
+      // catch (ManagementException err)
+      // {
+      //   Debug.WriteLine($"Error: {err.Message}");
+      // }
     }
 
     public void Stop()
     {
-      _watcher.Stop();
-      _watcher.EventArrived -= OnKeyValueChanged;
+      // _watcher.Stop();
+      // _watcher.EventArrived -= OnKeyValueChanged;
     }
 
-    private void OnKeyValueChanged(object sender, EventArrivedEventArgs e)
-    {
-      SystemColor = GetSystemColor();
-    }
+    // private void OnKeyValueChanged(object sender, EventArrivedEventArgs e)
+    // {
+    //   SystemColor = GetSystemColor();
+    // }
   }
 }

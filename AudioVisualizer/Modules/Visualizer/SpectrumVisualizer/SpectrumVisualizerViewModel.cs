@@ -4,18 +4,15 @@ using AudioVisualizer.Modules.AudioControl;
 using AudioVisualizer.Modules.GameSenseControl;
 using AudioVisualizer.Utils.RealTimeAudioListener;
 using Prism.Events;
-using System.ComponentModel.Composition;
 
 namespace AudioVisualizer.Modules.Visualizer.SpectrumVisualizer
 {
-  [Export(typeof(SpectrumVisualizerViewModel))]
   public class SpectrumVisualizerViewModel : ShellViewModel
   {
     private readonly IEventAggregator _eventAggregator;
     private readonly IRealTimeAudioListener _realTimeAudioListener;
     private readonly IGameSenseModule _gameSenseModule;
 
-    [ImportingConstructor]
     public SpectrumVisualizerViewModel(IEventAggregator aggregator, IRealTimeAudioListener audioListener, IGameSenseModule gameSenseModule)
     {
       SpectrumBarControl = new VisualizerBarControl();

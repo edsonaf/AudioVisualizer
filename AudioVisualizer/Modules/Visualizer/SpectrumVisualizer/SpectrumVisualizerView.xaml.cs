@@ -1,12 +1,10 @@
-﻿using System.ComponentModel.Composition;
-using System.Windows.Controls;
+﻿using System.Windows.Controls;
 
 namespace AudioVisualizer.Modules.Visualizer.SpectrumVisualizer
 {
   /// <summary>
   /// Interaction logic for SpectrumVisualizer.xaml
   /// </summary>
-  [Export]
   public partial class SpectrumVisualizerView
   {
     public SpectrumVisualizerView()
@@ -14,7 +12,6 @@ namespace AudioVisualizer.Modules.Visualizer.SpectrumVisualizer
       InitializeComponent();
     }
 
-    [Import]
     private SpectrumVisualizerViewModel ViewModel
     {
       set { DataContext = value; }

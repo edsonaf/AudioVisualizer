@@ -2,20 +2,16 @@
 using NAudio.CoreAudioApi;
 using Prism.Commands;
 using Prism.Events;
-using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.Composition;
 using System.Linq;
 using System.Windows.Input;
 using System.Timers;
-using System.Windows.Media;
 using AudioVisualizer.Modules.SpotifyIntegration;
 using AudioVisualizer.Utils.SystemColorRetriever;
 
 namespace AudioVisualizer.Modules.AudioControl
 {
-  [Export(typeof(AudioControlViewModel))]
   public class AudioControlViewModel : ShellViewModel
   {
     private readonly IEventAggregator _eventAggregator;
@@ -25,7 +21,6 @@ namespace AudioVisualizer.Modules.AudioControl
     private bool _isListening;
     private readonly Timer _timer;
 
-    [ImportingConstructor]
     public AudioControlViewModel(IEventAggregator aggregator, IRealTimeAudioListener realTimeAudioListener, ISpotifyLocal localSpotify)
     {
       _eventAggregator = aggregator;
@@ -87,7 +82,7 @@ namespace AudioVisualizer.Modules.AudioControl
 
     private void OnGetVolumeLevel(object sender, EventArgs e)
     {
-      if (SelectedDevice != null) OnPropertyChanged(() => Level);
+      // if (SelectedDevice != null) OnPropertyChanged(() => Level);
     }
 
     private void Start()
