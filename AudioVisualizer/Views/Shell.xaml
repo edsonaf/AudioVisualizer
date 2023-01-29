@@ -1,0 +1,39 @@
+﻿<Window x:Class="AudioVisualizer.Views.Shell"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:inf="clr-namespace:AudioVisualizer.Infrastructure"
+        xmlns:local="clr-namespace:AudioVisualizer"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:prism="http://prismlibrary.com/"
+        xmlns:viewModels="clr-namespace:AudioVisualizer.ViewModels"
+        Title="Audio Visualizer"
+        Width="525"
+        Height="375"
+        d:DataContext="{d:DesignInstance viewModels:ShellViewModel}"
+        Topmost="{Binding TopMost}"
+        mc:Ignorable="d">
+
+  <!-- <Window.Icon>resources\Alecive-Flatwoken-Apps-Volume-Soundsettings.ico</Window.Icon> -->
+
+  <Grid>
+    <Grid.Background>
+      <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+        <GradientStop Offset="15" Color="{Binding SystemColor, UpdateSourceTrigger=PropertyChanged}" />
+        <GradientStop Color="#FF2D2D30" />
+      </LinearGradientBrush>
+    </Grid.Background>
+
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="*" />
+    </Grid.RowDefinitions>
+
+    <Border Grid.Row="0">
+      <ContentControl prism:RegionManager.RegionName="{x:Static inf:RegionNames.AudioControlRegion}" />
+    </Border>
+    <Border Grid.Row="1" Margin="4,4,4,4">
+      <ContentControl HorizontalAlignment="Center" prism:RegionManager.RegionName="{x:Static inf:RegionNames.VisualizerRegion}" />
+    </Border>
+  </Grid>
+</Window>

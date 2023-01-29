@@ -2,8 +2,9 @@
 using AudioVisualizer.Controls;
 using AudioVisualizer.Modules.AudioControl;
 using AudioVisualizer.Modules.GameSenseControl;
-using AudioVisualizer.Utils.RealTimeAudioListener;
+using AudioVisualizer.ViewModels;
 using Prism.Events;
+using RealTimeAudioListener;
 
 namespace AudioVisualizer.Modules.Visualizer.SpectrumVisualizer
 {

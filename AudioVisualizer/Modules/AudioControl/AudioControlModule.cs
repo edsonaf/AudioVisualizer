@@ -1,22 +1,20 @@
 ﻿using AudioVisualizer.Infrastructure;
-using AudioVisualizer.Utils.RealTimeAudioListener;
 using Prism.Regions;
-using AudioVisualizer.Modules.SpotifyIntegration;
+using Prism.Ioc;
+using Prism.Modularity;
 
 namespace AudioVisualizer.Modules.AudioControl
 {
-  public class AudioControlModule
+  public class AudioControlModule : IModule
   {
-    private readonly IRegionManager _regionManager;
-
-    public AudioControlModule(IRegionManager regionManager, IRealTimeAudioListener audioListener, ISpotifyLocal localSpotify)
+    public void RegisterTypes(IContainerRegistry containerRegistry)
     {
-      _regionManager = regionManager;
     }
 
-    public void Initialize()
+    public void OnInitialized(IContainerProvider containerProvider)
     {
-      _regionManager.RegisterViewWithRegion(RegionNames.AudioControlRegion, typeof(AudioControlView));
+      var regionManager = containerProvider.Resolve<IRegionManager>();
+      regionManager.RegisterViewWithRegion(RegionNames.AudioControlRegion, typeof(Views.AudioControl));
     }
   }
 }
