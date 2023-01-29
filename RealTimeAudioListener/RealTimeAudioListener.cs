@@ -8,11 +8,9 @@ public class RealTimeAudioListener : IRealTimeAudioListener
 {
     public event EventHandler<SpectrumDataEventArgs> SpectrumDataReceived;
 
-    private List<byte> _lastSpectrumData = new List<byte>(15);
-    private readonly List<byte> _spectrumData = new List<byte>(15); //spectrum data buffer
-
+    private readonly List<byte> _spectrumData = new(15); //spectrum data buffer
+    private List<byte> _lastSpectrumData = new(15);
     private int _sameDataCounter;
-
     private WasapiLoopbackCapture _capture;
 
     public RealTimeAudioListener()
@@ -23,7 +21,7 @@ public class RealTimeAudioListener : IRealTimeAudioListener
 
     public List<MMDevice> CaptureDevices { get; set; }
 
-    public MMDevice SelectedDevice { get; set; }
+    public MMDevice? SelectedDevice { get; set; }
 
     public List<byte> SpectrumData => _spectrumData;
 
@@ -41,7 +39,7 @@ public class RealTimeAudioListener : IRealTimeAudioListener
 
     #region Data Processing
 
-    private float[] ConvertByteToFloat(byte[] array, int length)
+    private static float[] ConvertByteToFloat(byte[] array, int length)
     {
         var samplesNeeded = length / 4;
         var floatArr = new float[samplesNeeded];
@@ -71,8 +69,8 @@ public class RealTimeAudioListener : IRealTimeAudioListener
                 channelClone[i].Y = 0;
             }
 
-            var binaryExponentitaion = (int)Math.Log((int)FftDataSize.FFT4096, 2);
-            FastFourierTransform.FFT(true, binaryExponentitaion, channelClone);
+            var binaryExponentiation = (int)Math.Log((int)FftDataSize.FFT4096, 2);
+            FastFourierTransform.FFT(true, binaryExponentiation, channelClone);
             for (var i = 0; i < channelClone.Length / 2; i++)
             {
                 data[i] = (float)Math.Sqrt(
@@ -82,7 +80,7 @@ public class RealTimeAudioListener : IRealTimeAudioListener
             int x, y;
             var b0 = 0;
 
-            //computes the spectrum data, the code is taken from a bass_wasapi sample.
+            // computes the spectrum data, the code is taken from a bass_wasapi sample.
             for (x = 0; x < 16; x++)
             {
                 float peak = 0;

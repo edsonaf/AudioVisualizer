@@ -1,0 +1,78 @@
+<UserControl x:Class="AudioVisualizer1.MVVM.View.AudioControlView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:AudioVisualizer1.MVVM.View"
+             xmlns:viewModel="clr-namespace:AudioVisualizer1.MVVM.ViewModel"
+             mc:Ignorable="d"
+             d:DataContext="{d:DesignInstance viewModel:AudioControlViewModel}"
+             d:DesignHeight="300" d:DesignWidth="300">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <GroupBox Grid.Row="0"
+                  Margin="4,4,4,4"
+                  Foreground="White"
+                  Header="Audio Devices">
+            <Grid>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <ComboBox Grid.Column="0"
+                          MinWidth="180"
+                          IsEnabled="{Binding ComboboxEnabled}"
+                          ItemsSource="{Binding CaptureDevices}"
+                          SelectedItem="{Binding SelectedDevice, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                <Button Grid.Column="1"
+                        MinWidth="60"
+                        Margin="4,0,0,0"
+                        Command="{Binding StartCommand}"
+                        Content="{Binding OnOffButtonText}" />
+            </Grid>
+        </GroupBox>
+
+        <GroupBox Grid.Row="1"
+                  Margin="4,4,4,4"
+                  Foreground="White"
+                  Header="Spotify">
+            <GroupBox.Style>
+                <Style TargetType="{x:Type GroupBox}">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding SpotifyPlaying}" Value="False">
+                            <Setter Property="Visibility" Value="Collapsed" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding SpotifyPlaying}" Value="True">
+                            <Setter Property="Visibility" Value="Visible" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </GroupBox.Style>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock
+                    Text="{Binding Spotify.CurrentTrack.ArtistResource.Name, UpdateSourceTrigger=PropertyChanged}" />
+                <TextBlock Text=" - " />
+                <TextBlock
+                    Text="{Binding Spotify.CurrentTrack.TrackResource.Name, UpdateSourceTrigger=PropertyChanged}" />
+            </StackPanel>
+        </GroupBox>
+
+        <StackPanel Grid.Row="2" Grid.Column="0" Margin="0,4,0,0">
+            <Label HorizontalAlignment="Center" Content="Device Volume" Foreground="White" />
+            <ProgressBar Name="Level"
+                         Height="15"
+                         HorizontalAlignment="Stretch"
+                         Foreground="{Binding ColorRetriever.ThemeColor, UpdateSourceTrigger=PropertyChanged}"
+                         Maximum="1"
+                         Minimum="0"
+                         Value="{Binding Level, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" />
+        </StackPanel>
+    </Grid>
+</UserControl>

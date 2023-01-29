@@ -27,7 +27,7 @@ namespace AudioVisualizer.Utils.SystemColorRetriever
     {
       get
       {
-        Color color = SystemColor;
+        var color = SystemColor;
         return new SolidColorBrush(Color.FromArgb(255, color.R, color.G, color.B));
       }
     }
@@ -39,11 +39,11 @@ namespace AudioVisualizer.Utils.SystemColorRetriever
     /// <returns></returns>
     public Color GetSystemColor()
     {
-      Color systemColor = Colors.DarkBlue; // default if failed
+      var systemColor = Colors.DarkBlue; // default if failed
       try
       {
-        int argbColor = (int)Microsoft.Win32.Registry.GetValue(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationColor", null);
-        byte[] bytes = BitConverter.GetBytes(argbColor);
+        var argbColor = (int)Microsoft.Win32.Registry.GetValue(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationColor", null)!;
+        var bytes = BitConverter.GetBytes(argbColor);
         systemColor = Color.FromArgb(bytes[3], bytes[2], bytes[1], bytes[0]);
       }
       catch (Exception)

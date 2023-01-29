@@ -3,9 +3,6 @@ using System.Windows;
 using AudioVisualizer.Modules.AudioControl;
 using AudioVisualizer.Modules.GameSenseControl;
 using AudioVisualizer.Views;
-using Prism.DryIoc;
-using Prism.Ioc;
-using Prism.Modularity;
 
 namespace AudioVisualizer
 {

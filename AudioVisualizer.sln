@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AudioVisualizer", "AudioVis
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RealTimeAudioListener", "RealTimeAudioListener\RealTimeAudioListener.csproj", "{F05C456C-E55B-4EFB-A5EC-AA76A04DC1EE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AudioVisualizer1", "AudioVisualizer1\AudioVisualizer1.csproj", "{481667C5-1316-4722-AD5F-E001428F251E}"
+EndProject
 Global
 	GlobalSection(SubversionScc) = preSolution
 		Svn-Managed = True
@@ -25,6 +27,10 @@ Global
 		{F05C456C-E55B-4EFB-A5EC-AA76A04DC1EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F05C456C-E55B-4EFB-A5EC-AA76A04DC1EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F05C456C-E55B-4EFB-A5EC-AA76A04DC1EE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{481667C5-1316-4722-AD5F-E001428F251E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{481667C5-1316-4722-AD5F-E001428F251E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{481667C5-1316-4722-AD5F-E001428F251E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{481667C5-1316-4722-AD5F-E001428F251E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
