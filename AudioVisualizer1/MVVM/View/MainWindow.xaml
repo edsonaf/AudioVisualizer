@@ -7,7 +7,9 @@
         xmlns:viewModel="clr-namespace:AudioVisualizer1.MVVM.ViewModel"
         mc:Ignorable="d"
         d:DataContext="{d:DesignInstance Type=viewModel:MainViewModel}"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Audio Visualizer" Height="450" Width="800"
+        Icon="../../resources/Alecive-Flatwoken-Apps-Volume-Soundsettings.ico">
+
     <Grid>
         <Grid.Background>
             <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
@@ -18,14 +20,15 @@
 
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="100"></ColumnDefinition>
-            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
 
         <StackPanel Grid.Column="0" Margin="4 4 0 8">
-            <Button Content="Home" Margin="0 4 0 0" Height="25" Command="{Binding NavigateToHomeCommand}" />
-            <Button Margin="0 8 0 0" Content="Audio Control" Height="25" Command="{Binding NavigateToAudioControlCommand}" />
+            <Button Content="Home" Margin="0 4 0 0" Height="25" Command="{Binding NavigateToHomeCommand, UpdateSourceTrigger=PropertyChanged}" />
+            <Button Margin="0 8 0 0" Content="Audio Control" Height="25"
+                    Command="{Binding NavigateToAudioControlCommand}" />
         </StackPanel>
 
-        <ContentControl Grid.Column="1" Content="{Binding Navigation.CurrentView}"></ContentControl>
+        <ContentControl Grid.Column="1" Content="{Binding Navigation.CurrentView, UpdateSourceTrigger=PropertyChanged}"></ContentControl>
     </Grid>
 </Window>

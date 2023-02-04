@@ -3,6 +3,7 @@ using System.Linq;
 using System.Timers;
 using System.Windows.Input;
 using AudioVisualizer1.Core;
+using AudioVisualizer1.Services;
 using AudioVisualizer1.Utils;
 using NAudio.CoreAudioApi;
 using RealTimeAudioListener;
@@ -13,29 +14,32 @@ public class AudioControlViewModel : Core.ViewModel
 {
     private readonly IRealTimeAudioListener _audioListener;
     private readonly SystemColorRetriever _colorRetriever;
-    
     private readonly Timer _timer;
     private bool _isListening;
 
-    public AudioControlViewModel(IRealTimeAudioListener audioListener, SystemColorRetriever colorRetriever)
+    public AudioControlViewModel(INavigationService navService, IRealTimeAudioListener audioListener,
+        SystemColorRetriever colorRetriever)
     {
         _audioListener = audioListener;
         SelectedDevice = _audioListener.CaptureDevices.FirstOrDefault();
 
+        AudioBars = (navService.NavigateTo<VisualizerViewModel>() as VisualizerViewModel)!;
         _colorRetriever = colorRetriever;
         _colorRetriever.GetSystemColor();
-        
+
         _timer = new Timer(5);
         _timer.Elapsed += OnGetVolumeLevel;
         _timer.Start();
     }
-
+    
     private void OnGetVolumeLevel(object? sender, ElapsedEventArgs e)
     {
         if (SelectedDevice != null) OnPropertyChanged(nameof(Level));
     }
 
     public SystemColorRetriever ColorRetriever => _colorRetriever;
+
+    public VisualizerViewModel AudioBars { get; }
 
     public float Level => SelectedDevice?.AudioMeterInformation.MasterPeakValue ?? 0;
 
@@ -52,6 +56,7 @@ public class AudioControlViewModel : Core.ViewModel
     }
 
     private bool _comboBoxEnabled = true;
+    private bool _isPause = false; // TODO
 
     public bool ComboboxEnabled
     {
@@ -62,7 +67,7 @@ public class AudioControlViewModel : Core.ViewModel
             OnPropertyChanged();
         }
     }
-
+    
     public List<MMDevice> CaptureDevices => _audioListener.CaptureDevices;
 
     public MMDevice? SelectedDevice
@@ -83,18 +88,23 @@ public class AudioControlViewModel : Core.ViewModel
     {
         if (!_isListening)
         {
-            OnOffButtonText = "Stop";
+            OnOffButtonText = _isPause ? "Pause" : "Stop";
             ComboboxEnabled = false;
-            // _eventAggregator.GetEvent<StartVisualizerEvent>().Publish(true);
+            OnStartVisualizerEvent(true);
         }
         else
         {
             OnOffButtonText = "Start";
             ComboboxEnabled = true;
-            // _eventAggregator.GetEvent<StartVisualizerEvent>().Publish(false);
+            OnStartVisualizerEvent(false);
         }
 
         _isListening = !_isListening;
+    }
+
+    private void OnStartVisualizerEvent(bool start)
+    {
+        AudioBars.OnStartVisualizerReceived(start);
     }
 
     ~AudioControlViewModel()

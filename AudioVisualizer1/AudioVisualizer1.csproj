@@ -18,7 +18,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="MVVM\Model" />
+      <Resource Include="resources\Alecive-Flatwoken-Apps-Volume-Soundsettings.ico" />
     </ItemGroup>
 
 </Project>

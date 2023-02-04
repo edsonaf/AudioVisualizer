@@ -10,7 +10,7 @@
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition />
+            <RowDefinition Height="50"/>
             <RowDefinition />
             <RowDefinition />
         </Grid.RowDefinitions>
@@ -39,32 +39,32 @@
             </Grid>
         </GroupBox>
 
-        <GroupBox Grid.Row="1"
-                  Margin="4,4,4,4"
-                  Foreground="White"
-                  Header="Spotify">
-            <GroupBox.Style>
-                <Style TargetType="{x:Type GroupBox}">
-                    <Style.Triggers>
-                        <DataTrigger Binding="{Binding SpotifyPlaying}" Value="False">
-                            <Setter Property="Visibility" Value="Collapsed" />
-                        </DataTrigger>
-                        <DataTrigger Binding="{Binding SpotifyPlaying}" Value="True">
-                            <Setter Property="Visibility" Value="Visible" />
-                        </DataTrigger>
-                    </Style.Triggers>
-                </Style>
-            </GroupBox.Style>
-            <StackPanel Orientation="Horizontal">
-                <TextBlock
-                    Text="{Binding Spotify.CurrentTrack.ArtistResource.Name, UpdateSourceTrigger=PropertyChanged}" />
-                <TextBlock Text=" - " />
-                <TextBlock
-                    Text="{Binding Spotify.CurrentTrack.TrackResource.Name, UpdateSourceTrigger=PropertyChanged}" />
-            </StackPanel>
-        </GroupBox>
+        <!-- <GroupBox Grid.Row="1" -->
+        <!--           Margin="4,4,4,4" -->
+        <!--           Foreground="White" -->
+        <!--           Header="Spotify"> -->
+        <!--     <GroupBox.Style> -->
+        <!--         <Style TargetType="{x:Type GroupBox}"> -->
+        <!--             <Style.Triggers> -->
+        <!--                 <DataTrigger Binding="{Binding SpotifyPlaying}" Value="False"> -->
+        <!--                     <Setter Property="Visibility" Value="Collapsed" /> -->
+        <!--                 </DataTrigger> -->
+        <!--                 <DataTrigger Binding="{Binding SpotifyPlaying}" Value="True"> -->
+        <!--                     <Setter Property="Visibility" Value="Visible" /> -->
+        <!--                 </DataTrigger> -->
+        <!--             </Style.Triggers> -->
+        <!--         </Style> -->
+        <!--     </GroupBox.Style> -->
+        <!--     <StackPanel Orientation="Horizontal"> -->
+        <!--         <TextBlock -->
+        <!--             Text="{Binding Spotify.CurrentTrack.ArtistResource.Name, UpdateSourceTrigger=PropertyChanged}" /> -->
+        <!--         <TextBlock Text=" - " /> -->
+        <!--         <TextBlock -->
+        <!--             Text="{Binding Spotify.CurrentTrack.TrackResource.Name, UpdateSourceTrigger=PropertyChanged}" /> -->
+        <!--     </StackPanel> -->
+        <!-- </GroupBox> -->
 
-        <StackPanel Grid.Row="2" Grid.Column="0" Margin="0,4,0,0">
+        <StackPanel Grid.Row="1" Grid.Column="0" Margin="0,4,0,0">
             <Label HorizontalAlignment="Center" Content="Device Volume" Foreground="White" />
             <ProgressBar Name="Level"
                          Height="15"
@@ -74,5 +74,8 @@
                          Minimum="0"
                          Value="{Binding Level, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" />
         </StackPanel>
+
+        <ContentPresenter Grid.Row="2" Content="{Binding AudioBars}"></ContentPresenter>
+
     </Grid>
 </UserControl>

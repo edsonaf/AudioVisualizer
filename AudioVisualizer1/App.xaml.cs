@@ -32,6 +32,7 @@ namespace AudioVisualizer1
             services.AddSingleton<MainViewModel>();
             services.AddSingleton<HomeViewModel>();
             services.AddSingleton<AudioControlViewModel>();
+            services.AddSingleton<VisualizerViewModel>();
             
             // Navigation services
             services.AddSingleton<INavigationService, NavigationService>();

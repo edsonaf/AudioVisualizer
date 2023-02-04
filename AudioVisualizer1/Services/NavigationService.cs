@@ -8,7 +8,9 @@ public interface INavigationService
 {
     ViewModel CurrentView { get; }
 
-    void NavigateTo<T>() where T : ViewModel;
+    void NavigateAndSetCurrentViewTo<T>() where T : ViewModel;
+
+    ViewModel? NavigateTo<TViewModel>() where TViewModel : ViewModel;
 }
 
 public class NavigationService : ObservableObject, INavigationService
@@ -31,9 +33,14 @@ public class NavigationService : ObservableObject, INavigationService
         _viewModelFactory = viewModelFactory;
     }
 
-    public void NavigateTo<TViewModel>() where TViewModel : ViewModel
+    public void NavigateAndSetCurrentViewTo<TViewModel>() where TViewModel : ViewModel
     {
         var viewModel = _viewModelFactory.Invoke(typeof(TViewModel));
         CurrentView = viewModel;
+    }
+
+    public ViewModel? NavigateTo<TViewModel>() where TViewModel : ViewModel
+    {
+        return _viewModelFactory.Invoke(typeof(TViewModel));
     }
 }

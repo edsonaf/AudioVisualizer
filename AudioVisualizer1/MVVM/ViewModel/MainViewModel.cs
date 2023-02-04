@@ -1,6 +1,7 @@
 using AudioVisualizer1.Core;
 using AudioVisualizer1.Services;
 using AudioVisualizer1.Utils;
+using System.Windows.Input;
 
 namespace AudioVisualizer1.MVVM.ViewModel
 {
@@ -17,21 +18,26 @@ namespace AudioVisualizer1.MVVM.ViewModel
                 OnPropertyChanged();
             }
         }
-        
-        public SystemColorRetriever ColorRetriever { get; }
 
-        public RelayCommand NavigateToHomeCommand { get; set; }
-        public RelayCommand NavigateToAudioControlCommand { get; set; }
+        //public SystemColorRetriever ColorRetriever { get; }
+
+        private readonly RelayCommand _navigateToHomeCommand;
+        public ICommand NavigateToHomeCommand => _navigateToHomeCommand;
+
+        private readonly RelayCommand _navigateToAudioCommand;
+
+        public ICommand NavigateToAudioControlCommand => _navigateToAudioCommand;
+
 
         public MainViewModel(INavigationService navService, SystemColorRetriever colorRetriever)
         {
             _navigation = navService;
-            NavigateToHomeCommand = new RelayCommand(o => { Navigation.NavigateTo<HomeViewModel>(); }, o => true);
-            NavigateToAudioControlCommand = new RelayCommand(o => { Navigation.NavigateTo<AudioControlViewModel>(); }, o => true);
-
-            ColorRetriever = colorRetriever;
-            ColorRetriever.GetSystemColor();
-            ColorRetriever.Start();
+            _navigateToHomeCommand = new RelayCommand(o => { Navigation.NavigateAndSetCurrentViewTo<HomeViewModel>(); }, o => true);
+            _navigateToAudioCommand =
+                new RelayCommand(o => { Navigation.NavigateAndSetCurrentViewTo<AudioControlViewModel>(); }, o => true);
+            //ColorRetriever = colorRetriever;
+            //ColorRetriever.GetSystemColor();
+            //ColorRetriever.Start();
         }
     }
 }
