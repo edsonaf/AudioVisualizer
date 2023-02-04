@@ -16,7 +16,7 @@ public class VisualizerViewModel : Core.ViewModel
         _realTimeAudioListener.SpectrumDataReceived += OnSpectrumDataReceived;
         _gameSense = new GameSense();
         GameSenseAvailable = _gameSense.InitializeGameSenseConnection();
-        SpectrumBarControl = new VisualizerBarControl();
+        SpectrumBarControl = new VisualizerBarControl(ColorRetriever);
     }
 
     public bool GameSenseAvailable { get; }
@@ -28,17 +28,14 @@ public class VisualizerViewModel : Core.ViewModel
     public void OnStartVisualizerReceived(bool start)
     {
         if (start)
+        {
             _realTimeAudioListener.Start();
+        }
         else
         {
             _realTimeAudioListener.Stop();
-            SpectrumBarControl.Set(new List<byte> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 });
+            SpectrumBarControl.Clear();
         }
-    }
-
-    protected virtual void OnStartVisualizerEvent(bool start)
-    {
-        // StartVisualizer?.Invoke(this, start);
     }
 
     private void OnSpectrumDataReceived(object? sender, SpectrumDataEventArgs e)

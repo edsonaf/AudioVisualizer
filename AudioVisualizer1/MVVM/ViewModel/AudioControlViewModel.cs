@@ -17,27 +17,22 @@ public class AudioControlViewModel : Core.ViewModel
     private readonly Timer _timer;
     private bool _isListening;
 
-    public AudioControlViewModel(INavigationService navService, IRealTimeAudioListener audioListener,
-        SystemColorRetriever colorRetriever)
+    public AudioControlViewModel(INavigationService navService, IRealTimeAudioListener audioListener)
     {
         _audioListener = audioListener;
         SelectedDevice = _audioListener.CaptureDevices.FirstOrDefault();
 
         AudioBars = (navService.NavigateTo<VisualizerViewModel>() as VisualizerViewModel)!;
-        _colorRetriever = colorRetriever;
-        _colorRetriever.GetSystemColor();
 
         _timer = new Timer(5);
         _timer.Elapsed += OnGetVolumeLevel;
         _timer.Start();
     }
-    
+
     private void OnGetVolumeLevel(object? sender, ElapsedEventArgs e)
     {
         if (SelectedDevice != null) OnPropertyChanged(nameof(Level));
     }
-
-    public SystemColorRetriever ColorRetriever => _colorRetriever;
 
     public VisualizerViewModel AudioBars { get; }
 
@@ -67,7 +62,7 @@ public class AudioControlViewModel : Core.ViewModel
             OnPropertyChanged();
         }
     }
-    
+
     public List<MMDevice> CaptureDevices => _audioListener.CaptureDevices;
 
     public MMDevice? SelectedDevice

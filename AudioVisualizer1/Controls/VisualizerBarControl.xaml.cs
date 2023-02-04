@@ -1,25 +1,18 @@
 ﻿using System.Collections.Generic;
-using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media;
+using AudioVisualizer1.Utils;
 
 namespace AudioVisualizer1.Controls;
 
 public partial class VisualizerBarControl : UserControl
 {
-    public static readonly DependencyProperty ThemeColorProperty = DependencyProperty.Register("ThemeColor",
-        typeof(Brush), typeof(VisualizerBarControl), new PropertyMetadata());
-
-    public Brush ThemeColor
-    {
-        get => (Brush)GetValue(ThemeColorProperty);
-        set => SetValue(ThemeColorProperty, value);
-    }
-
-    public VisualizerBarControl()
+    public VisualizerBarControl(SystemColorRetriever colorRetriever)
     {
         InitializeComponent();
+        ColorRetriever = colorRetriever;
     }
+
+    public SystemColorRetriever ColorRetriever { get; }
 
     public void Set(List<byte> spectrumData)
     {
