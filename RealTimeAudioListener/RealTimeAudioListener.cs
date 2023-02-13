@@ -1,4 +1,5 @@
-﻿using NAudio.CoreAudioApi;
+﻿using System.Diagnostics;
+using NAudio.CoreAudioApi;
 using NAudio.Dsp;
 using NAudio.Wave;
 
@@ -10,18 +11,36 @@ public class RealTimeAudioListener : IRealTimeAudioListener
 
     private readonly List<byte> _spectrumData = new(15); //spectrum data buffer
     private List<byte> _lastSpectrumData = new(15);
-    private int _sameDataCounter;
     private WasapiLoopbackCapture _capture;
+    private readonly MMDeviceEnumerator _enumerator = new();
+    private readonly NotificationClientImplementation _notificationClient;
+    private readonly NAudio.CoreAudioApi.Interfaces.IMMNotificationClient _notifyClient;
 
     public RealTimeAudioListener()
     {
-        var enumerator = new MMDeviceEnumerator();
-        CaptureDevices = enumerator.EnumerateAudioEndPoints(DataFlow.Render, DeviceState.Active).ToList();
+        Debug.WriteLine($"Started {nameof(RealTimeAudioListener)}...");
+
+        _notificationClient = new NotificationClientImplementation();
+        _notifyClient = _notificationClient;
+        _enumerator.RegisterEndpointNotificationCallback(_notifyClient);
+        _selectedDevice = _enumerator.GetDefaultAudioEndpoint(DataFlow.Render, Role.Multimedia);
     }
 
-    public List<MMDevice> CaptureDevices { get; set; }
+    public MMDeviceCollection DeviceCollection =>
+        _enumerator.EnumerateAudioEndPoints(DataFlow.Render, DeviceState.Active);
 
-    public MMDevice? SelectedDevice { get; set; }
+    private MMDevice _selectedDevice;
+    private int _sameDataCounter;
+
+    public MMDevice SelectedDevice
+    {
+        get => _selectedDevice;
+        set
+        {
+            _selectedDevice = value;
+            
+        }
+    }
 
     public List<byte> SpectrumData => _spectrumData;
 

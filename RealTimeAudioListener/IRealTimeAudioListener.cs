@@ -5,9 +5,8 @@ namespace RealTimeAudioListener
   public interface IRealTimeAudioListener
   {
     event EventHandler<SpectrumDataEventArgs> SpectrumDataReceived;
-
-    List<MMDevice> CaptureDevices { get; }
-    MMDevice? SelectedDevice { get; set; }
+    MMDeviceCollection DeviceCollection { get; }
+    MMDevice SelectedDevice { get; set; }
     List<byte> SpectrumData { get; }
     void Start();
     void Stop();

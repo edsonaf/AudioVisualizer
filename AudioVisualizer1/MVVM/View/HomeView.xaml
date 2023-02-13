@@ -9,7 +9,11 @@
              d:DataContext="{d:DesignInstance Type=viewModel:HomeViewModel}"
              Background="{Binding ColorRetriever.ThemeColor}">
     <Grid>
-        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center">
             <TextBlock Text="Home" FontSize="25" Foreground="White"></TextBlock>
         </StackPanel>
     </Grid>

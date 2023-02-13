@@ -6,7 +6,7 @@
         xmlns:viewModel="clr-namespace:AudioVisualizer1.MVVM.ViewModel"
         mc:Ignorable="d"
         d:DataContext="{d:DesignInstance Type=viewModel:MainViewModel}"
-        Title="Audio Visualizer" Height="450" MinWidth="500" MaxWidth="500"
+        Title="SINTJE'S STEEL MANAGER" Height="450" MinWidth="500" MaxWidth="500"
         Icon="../../resources/Alecive-Flatwoken-Apps-Volume-Soundsettings.ico">
 
     <Grid>

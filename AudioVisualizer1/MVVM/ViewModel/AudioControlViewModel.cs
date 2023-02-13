@@ -18,7 +18,7 @@ public class AudioControlViewModel : Core.ViewModel
     public AudioControlViewModel(INavigationService navService, IRealTimeAudioListener audioListener)
     {
         _audioListener = audioListener;
-        SelectedDevice = _audioListener.CaptureDevices.FirstOrDefault();
+        SelectedDevice = _audioListener.DeviceCollection.FirstOrDefault();
 
         AudioBars = (navService.NavigateTo<VisualizerViewModel>() as VisualizerViewModel)!;
 
@@ -61,7 +61,7 @@ public class AudioControlViewModel : Core.ViewModel
         }
     }
 
-    public List<MMDevice> CaptureDevices => _audioListener.CaptureDevices;
+    public List<MMDevice> CaptureDevices => _audioListener.DeviceCollection.ToList();
 
     public MMDevice? SelectedDevice
     {
