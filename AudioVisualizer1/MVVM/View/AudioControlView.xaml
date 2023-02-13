@@ -10,7 +10,7 @@
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="50"/>
+            <RowDefinition Height="50" />
             <RowDefinition />
             <RowDefinition />
         </Grid.RowDefinitions>
@@ -69,13 +69,13 @@
             <ProgressBar Name="Level"
                          Height="15"
                          HorizontalAlignment="Stretch"
-                         Foreground="{Binding ColorRetriever.ThemeColor, UpdateSourceTrigger=PropertyChanged}"
+                         Foreground="{Binding ColorRetriever.ThemeColor}"
                          Maximum="1"
                          Minimum="0"
                          Value="{Binding Level, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" />
         </StackPanel>
 
-        <ContentPresenter Grid.Row="2" Content="{Binding AudioBars}"></ContentPresenter>
+        <ContentPresenter Grid.Row="2" HorizontalAlignment="Center" Content="{Binding AudioBars}"></ContentPresenter>
 
     </Grid>
 </UserControl>

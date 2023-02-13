@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using AudioVisualizer1.Controls;
 using AudioVisualizer1.MVVM.Model;
 using RealTimeAudioListener;

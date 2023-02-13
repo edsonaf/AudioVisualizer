@@ -4,7 +4,6 @@ using System.Timers;
 using System.Windows.Input;
 using AudioVisualizer1.Core;
 using AudioVisualizer1.Services;
-using AudioVisualizer1.Utils;
 using NAudio.CoreAudioApi;
 using RealTimeAudioListener;
 
@@ -13,7 +12,6 @@ namespace AudioVisualizer1.MVVM.ViewModel;
 public class AudioControlViewModel : Core.ViewModel
 {
     private readonly IRealTimeAudioListener _audioListener;
-    private readonly SystemColorRetriever _colorRetriever;
     private readonly Timer _timer;
     private bool _isListening;
 

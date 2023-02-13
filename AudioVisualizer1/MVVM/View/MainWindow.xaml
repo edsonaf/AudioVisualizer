@@ -3,17 +3,17 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:AudioVisualizer1.MVVM.View"
         xmlns:viewModel="clr-namespace:AudioVisualizer1.MVVM.ViewModel"
         mc:Ignorable="d"
         d:DataContext="{d:DesignInstance Type=viewModel:MainViewModel}"
-        Title="Audio Visualizer" Height="450" Width="800"
+        Title="Audio Visualizer" Height="450" MinWidth="500" MaxWidth="500"
         Icon="../../resources/Alecive-Flatwoken-Apps-Volume-Soundsettings.ico">
 
     <Grid>
         <Grid.Background>
             <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
-                <GradientStop Offset="15" Color="{Binding SystemColor, UpdateSourceTrigger=PropertyChanged}" />
+                <GradientStop Offset="15"
+                              Color="{Binding ColorRetriever.SystemColor, UpdateSourceTrigger=PropertyChanged}" />
                 <GradientStop Color="#FF2D2D30" />
             </LinearGradientBrush>
         </Grid.Background>
@@ -24,11 +24,14 @@
         </Grid.ColumnDefinitions>
 
         <StackPanel Grid.Column="0" Margin="4 4 0 8">
-            <Button Content="Home" Margin="0 4 0 0" Height="25" Command="{Binding NavigateToHomeCommand, UpdateSourceTrigger=PropertyChanged}" />
+            <Button Content="Home" Margin="0 4 0 0" Height="25"
+                    Command="{Binding NavigateToHomeCommand, UpdateSourceTrigger=PropertyChanged}" />
             <Button Margin="0 8 0 0" Content="Audio Control" Height="25"
                     Command="{Binding NavigateToAudioControlCommand}" />
         </StackPanel>
 
-        <ContentControl Grid.Column="1" Content="{Binding Navigation.CurrentView, UpdateSourceTrigger=PropertyChanged}"></ContentControl>
+        <ContentControl Grid.Column="1" HorizontalContentAlignment="Center" HorizontalAlignment="Stretch"
+                        Content="{Binding Navigation.CurrentView, UpdateSourceTrigger=PropertyChanged}">
+        </ContentControl>
     </Grid>
 </Window>

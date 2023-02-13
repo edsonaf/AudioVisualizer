@@ -8,8 +8,8 @@ public partial class VisualizerBarControl : UserControl
 {
     public VisualizerBarControl(SystemColorRetriever colorRetriever)
     {
-        InitializeComponent();
         ColorRetriever = colorRetriever;
+        InitializeComponent();
     }
 
     public SystemColorRetriever ColorRetriever { get; }
