@@ -119,8 +119,8 @@ public class SystemColorRetriever : ObservableObject
 
     private void OnKeyValueChanged(object sender, EventArrivedEventArgs e)
     {
-        Debug.WriteLine($"Value changed");
         SystemColor = GetSystemColor();
         OnPropertyChanged(nameof(ThemeColor));
+        Debug.WriteLine($"{nameof(SystemColor)} value changed: {SystemColor.ToString()}");
     }
 }
